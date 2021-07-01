@@ -1,6 +1,7 @@
 #Importando os objetos e bibliotecas
 from objetos import *
 from operator import itemgetter
+import os
 import random
 
 #Definindo as listas e listas de objetos
@@ -12,6 +13,10 @@ turmas = []
 #Definindo variaveis auxiliares
 lista_vazia = []
 dicionario_vazio = {}
+
+#Criando funcionalidades gerais
+def clear():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 #Criando as funcionalidades do menu principal
 def cadastrar_aluno():
@@ -64,22 +69,25 @@ def cadastrar_turma():
     materia = input("Insira o nome da matéria da turma: ")
     nome_da_turma = f"{materia}{random.randint(1000,9999)}"
     turmas.append(Turma(nome_da_turma,materia,None,lista_vazia,dicionario_vazio))
-    print(f"A turma {nome_da_turma} está pronta para receber os professores e os alunos")
+    clear()
+    print(f"A turma {nome_da_turma} está pronta para receber os professores e os alunos \n")
     menu_turmas()
 
 def designar_professor():
-    turma_selecionada = input("Insira o nome da turma: ")
-    turmas_atuais = []
+    turma_selecionada = input("Digite o nome da turma: ")
+    todos_os_nomes = []
     for turma in turmas:
-        turmas_atuais.append(turma._nome_turma)
-    if turma_selecionada in turmas_atuais:
-        professor = input("Insira o nome do professor da turma: ")
-        turma._professor = professor
-        print(f"O professor {professor} foi designado para a turma {turma._nome_turma}")
-        menu_turmas()
-    else:
+        todos_os_nomes.append(turma._nome_turma)
+    if turma_selecionada not in todos_os_nomes:
         print("Turma não encontrada")
         menu_turmas()
+    else:
+        for turma in turmas:
+            if turma_selecionada == turma._nome_turma:
+                professor = input("Digite o nome do professor: ")
+                turma._professor.append(professor)
+                print(f"O professor {professor} foi adicionado a turma {turma._nome_turma}")
+                menu_turmas()
 
 def designar_aluno():
     turma_selecionada = input("Digite o nome da turma: ")
@@ -93,38 +101,40 @@ def designar_aluno():
         for turma in turmas:
             if turma_selecionada == turma._nome_turma:
                 aluno = input("Digite o nome do aluno: ")
-                turma.desginar_aluno_method(aluno)
-    
+                turma._alunos.append(aluno)
+                print(f"O aluno {aluno} foi adicionado a turma {turma._nome_turma}")
+                menu_turmas()
 
 def remover_aluno():
-    turma_selecionada = input("Insira o nome da turma: ")
-    turmas_atuais = []
+    turma_selecionada = input("Digite o nome da turma: ")
+    todos_os_nomes = []
     for turma in turmas:
-        turmas_atuais.append(turma._nome_turma)
-    if turma_selecionada in turmas_atuais:
-        aluno = input("Insira o nome do aluno: ")
-        turma._alunos.pop(turma._alunos.index(aluno))
-        print(f"O aluno {aluno} foi removido da turma {turma._nome_turma}")
-        menu_turmas()
-    else:
+        todos_os_nomes.append(turma._nome_turma)
+    if turma_selecionada not in todos_os_nomes:
         print("Turma não encontrada")
         menu_turmas()
+    else:
+        for turma in turmas:
+            if turma_selecionada == turma._nome_turma:
+                aluno = input("Digite o nome do aluno: ")
+                turma._alunos.pop(turma._alunos.index(aluno))
+                print(f"O aluno {aluno} foi removido da {turma._nome_turma}")
+                menu_turmas()
 
 def atribuir_nota_aluno():
-    turma_selecionada = input("Insira o nome da turma: ")
-    turmas_atuais = []
-    for turma in turmas:
-        turmas_atuais.append(turma._nome_turma)
-    if turma_selecionada in turmas_atuais:
-        aluno = input("Insira o nome do aluno: ")
-        nota = input("Insira a nota do aluno: ")
-        turma._notas_alunos[aluno] = nota
-        print(f"Nota {nota} atribuída ao aluno {aluno}" )
-        print(turma._notas_alunos)
+    aluno = input("Digite o CPF do aluno: ")
+    todos_alunos = []
+    for individuo in alunos:
+        todos_alunos.append(individuo._cpf)
+    if aluno not in todos_alunos:
+        print("Aluno não encontrado")
         menu_turmas()
     else:
-        print("Turma não encontrada")
-        menu_turmas()
+        for individuo in alunos:
+            if aluno == individuo._cpf:
+                individuo.nota = input("Digite a nota do aluno: ")
+                print(f"Nota {individuo.nota} atribuída ao aluno de CPF {individuo._cpf}")
+                menu_turmas()
 
 def mostrar_alunos_turma():
     turma_selecionada = input("Insira o nome da turma: ")
@@ -143,13 +153,8 @@ def mostrar_alunos_turma():
         menu_turmas()
 
 def mostrar_turmas():
-    lista_turmas = []
-
     for turma in turmas:
-        lista_turmas.append(turma._nome_turma)
-    print(lista_turmas)
-
-    menu_turmas()
+        print(turma._nome_turma)
 
 #Criando os menus
 def menu_principal():
@@ -207,6 +212,8 @@ def menu_turmas():
     #     print("Digite apenas o número da opção selecionada")
 
 #Executando o código
+clear()
 menu_principal()
+clear()
 
 

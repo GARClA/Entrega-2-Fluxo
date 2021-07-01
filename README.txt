@@ -10,13 +10,6 @@ Funcionalidade a atribuir:
 
     adicionar opção de visualização dos CPFs;
 
-Bugs:
-    Especificados nas funções:
-        designar_aluno();
-        mostrar_turmas();
-    
-    Suposições:
-        Acredito que o mesmo bug de designar_aluno() esteja acontecendo em desgnar_professor() e de alguma forma afetando remover_aluno()
 
 Observações:
     Nos menus, existe um 'try/except' que pode deixar um pouco lenta a depuração, sugiro comentá-los

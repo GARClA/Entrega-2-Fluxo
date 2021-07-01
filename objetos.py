@@ -14,6 +14,8 @@ class Aluno:
         self._primeiro_nome = _primeiro_nome
         self._sobrenome = _sobrenome
         self._cpf = _cpf
+        
+        self.nota = None
 
 class Turma:
     def __init__(self, _nome_turma, _materia, _professor, _alunos, _notas_alunos):
@@ -23,5 +25,5 @@ class Turma:
         self._alunos = _alunos
         self._notas_alunos = _notas_alunos
 
-    def designar_aluno_method(self,aluno):
-        self._alunos.append(aluno)
+        self.tamanho_turma = len(_alunos)
+
