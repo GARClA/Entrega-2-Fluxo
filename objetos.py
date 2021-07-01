@@ -46,6 +46,7 @@ def cadastrar_materia():
 
 def mostrar_todos_alunos():
     i = 0
+    #Criar opção de mostrar o CPF
     for aluno in alunos:
         print(f"{alunos[i]._primeiro_nome} {alunos[i]._sobrenome}")
         i += 1
@@ -53,6 +54,7 @@ def mostrar_todos_alunos():
 
 def mostrar_todos_professores():
     i = 0
+    #Criar opção de mostrar o CPF
     for professor in professores:
         print(f"{professores[i]._primeiro_nome} {professores[i]._sobrenome}")
         i += 1
