@@ -22,3 +22,5 @@ class Turma:
         self._professor = _professor
         self._alunos = _alunos
         self._notas_alunos = _notas_alunos
+
+        _tamanho_da_turma = len(_alunos)

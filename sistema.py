@@ -4,10 +4,13 @@ professores = []
 alunos = []
 turmas = []
 
+#Definindo variaveis auxiliares
 lista_vazia = []
+dicionario_vazio = {}
 
 #Importando os objetos e bibliotecas
 from objetos import *
+from operator import itemgetter
 import random
 
 #Criando as funcionalidades do menu principal
@@ -60,7 +63,7 @@ def mostrar_todas_materias():
 def cadastrar_turma():
     materia = input("Insira o nome da matéria da turma: ")
     nome_da_turma = f"{materia}{random.randint(1000,9999)}"
-    turmas.append(Turma(nome_da_turma,materia,None,lista_vazia,None))
+    turmas.append(Turma(nome_da_turma,materia,None,lista_vazia,dicionario_vazio))
     print(f"A turma {nome_da_turma} está pronta para receber os professores e os alunos")
     menu_turmas()
 
@@ -79,6 +82,7 @@ def designar_professor():
         menu_turmas()
 
 def designar_aluno():
+    #[BUG] O aluno está sempre sendo designado para a última turma criada
     turma_selecionada = input("Insira o nome da turma: ")
     turmas_atuais = []
     for turma in turmas:
@@ -92,44 +96,134 @@ def designar_aluno():
         print("Turma não encontrada")
         menu_turmas()
 
+def remover_aluno():
+    turma_selecionada = input("Insira o nome da turma: ")
+    turmas_atuais = []
+    for turma in turmas:
+        turmas_atuais.append(turma._nome_turma)
+    if turma_selecionada in turmas_atuais:
+        aluno = input("Insira o nome do aluno: ")
+        turma._alunos.pop(turma._alunos.index(aluno))
+        print(f"O aluno {aluno} foi removido da turma {turma._nome_turma}")
+        menu_turmas()
+    else:
+        print("Turma não encontrada")
+        menu_turmas()
+
+def atribuir_nota_aluno():
+    turma_selecionada = input("Insira o nome da turma: ")
+    turmas_atuais = []
+    for turma in turmas:
+        turmas_atuais.append(turma._nome_turma)
+    if turma_selecionada in turmas_atuais:
+        aluno = input("Insira o nome do aluno: ")
+        nota = input("Insira a nota do aluno: ")
+        turma._notas_alunos[aluno] = nota
+        print(f"Nota {nota} atribuída ao aluno {aluno}" )
+        print(turma._notas_alunos)
+        menu_turmas()
+    else:
+        print("Turma não encontrada")
+        menu_turmas()
+
+def mostrar_alunos_turma():
+    turma_selecionada = input("Insira o nome da turma: ")
+    turmas_atuais = []
+    for turma in turmas:
+        turmas_atuais.append(turma._nome_turma)
+    if turma_selecionada in turmas_atuais:
+        lista = sorted(turma._alunos)
+        for nome in lista:
+            i = 0
+            print(nome)
+            i += 1
+        menu_turmas()
+    else:
+        print("Turma não encontrada")
+        menu_turmas()
+
+def mostrar_turmas():
+    #[BUG] Apenas o primeiro item do dicionário está sendo exibido
+    lista_turmas = []
+    lista_tamanho = []
+    tamanho_turmas = {}
+
+    for turma in turmas:
+        lista_turmas.append(turma._nome_turma)
+        lista_tamanho.append(f"len(turma._alunos")
+    for nome in lista_turmas:
+        i=0
+        tamanho_turmas[lista_tamanho[i]] = lista_turmas[i]
+        i += 1
+    print(tamanho_turmas)
+    
+    # tamanhos_ordenados = sorted(tamanho_turmas.keys(), reverse= True)
+    # turmas_ordenadas = []
+    # for tamanho in tamanhos_ordenados:
+    #     turmas_ordenadas.append(tamanho_turmas[tamanho])
+    # for turma_ in turmas_ordenadas:
+    #     i = 0
+    #     print(turmas_ordenadas[i])
+    #     i += 1
+
+    menu_turmas()
+
 #Criando os menus
 def menu_principal():
     print("[1] - Cadastrar Aluno \n[2] - Cadastrar Novo Professor \n[3] - Cadastrar Nova Matéria \n[4] - Mostrar Todos os Alunos")
     print("[5] - Mostrar Todos os Professores \n[6] - Mostrar Todas as Matérias \n[7] - Ir Para o Menu de Turmas \n[8] - Sair do Programa ")
     opcao = input("Digite o número correspondente a opção desejada: ")
-    if int(opcao) == 1:
-        cadastrar_aluno()
-    elif int(opcao) == 2:
-        cadastrar_professor()
-    elif int(opcao) == 3:
-        cadastrar_materia()
-    elif int(opcao) == 4:
-        mostrar_todos_alunos()
-    elif int(opcao) == 5:
-        mostrar_todos_professores()
-    elif int(opcao) == 6:
-        mostrar_todas_materias()
-    elif int(opcao) == 7:
-        menu_turmas()
-    elif int(opcao) == 8:
-        print("Sessão encerrada com sucesso")
-    else:
-        print("Opção não encontrada")
+    try:
+        opcao = int(opcao)
+        if opcao == 1:
+            cadastrar_aluno()
+        elif opcao == 2:
+            cadastrar_professor()
+        elif opcao == 3:
+            cadastrar_materia()
+        elif opcao == 4:
+            mostrar_todos_alunos()
+        elif opcao == 5:
+            mostrar_todos_professores()
+        elif opcao == 6:
+            mostrar_todas_materias()
+        elif opcao == 7:
+            menu_turmas()
+        elif opcao == 8:
+            print("Sessão encerrada com sucesso")
+        else:
+            print("Opção não encontrada")
+    except:
+        print("Digite apenas o número da opção selecionada")
+
 
 def menu_turmas():
-    print("[1] - Cadastrar Nova Turma \n[2] - Designar Professor Para Turma \n[3] - Atribuir Alunos a Turma")
-    print("[8] - Voltar ao Menu Principal")
+    print("[1] - Cadastrar Nova Turma \n[2] - Designar Professor Para Turma \n[3] - Atribuir Alunos a Turma \n[4] - Remover Aluno da Turma")
+    print("[5] - Adicionar Nota a Aluno \n[6] - Mostrar Alunos da Turma \n[7] - Mostrar Todas as Turmas\n[8] - Voltar ao Menu Principal")
     opcao = input("Digite o número correspondente a opção desejada: ")
-    if int(opcao) == 1:
-        cadastrar_turma()
-    elif int(opcao) == 2:
-        designar_professor()
-    elif int(opcao) == 3:
-        designar_aluno()
-    elif int(opcao) == 8:
-        menu_principal()
-    else:
-        print("Opção não encontrada")
+    try:
+        opcao = int(opcao)
+        if opcao == 1:
+            cadastrar_turma()
+        elif opcao == 2:
+            designar_professor()
+        elif opcao == 3:
+            designar_aluno()
+        elif opcao == 4:
+            remover_aluno()
+        elif opcao == 5:
+            atribuir_nota_aluno()
+        elif opcao == 6:
+            mostrar_alunos_turma()
+        elif opcao == 7:
+            mostrar_turmas()
+        elif opcao == 8:
+            menu_principal()
+        else:
+            print("Opção não encontrada")
+    except:
+        print("Digite apenas o número da opção selecionada")
+
 
 
 #Executando o código
