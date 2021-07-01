@@ -82,19 +82,19 @@ def designar_professor():
         menu_turmas()
 
 def designar_aluno():
-    #[BUG] O aluno está sempre sendo designado para a última turma criada
-    turma_selecionada = input("Insira o nome da turma: ")
-    turmas_atuais = []
+    turma_selecionada = input("Digite o nome da turma: ")
+    todos_os_nomes = []
     for turma in turmas:
-        turmas_atuais.append(turma._nome_turma)
-    if turma_selecionada in turmas_atuais:
-        aluno = input("Insira o nome do aluno: ")
-        turma._alunos.append(aluno)
-        print(f"O aluno {aluno} foi designado para a turma {turma._nome_turma}")
-        menu_turmas()
-    else:
+        todos_os_nomes.append(turma._nome_turma)
+    if turma_selecionada not in todos_os_nomes:
         print("Turma não encontrada")
         menu_turmas()
+    else:
+        for turma in turmas:
+            if turma_selecionada == turma._nome_turma:
+                aluno = input("Digite o nome do aluno: ")
+                turma.desginar_aluno_method(aluno)
+    
 
 def remover_aluno():
     turma_selecionada = input("Insira o nome da turma: ")
@@ -143,7 +143,6 @@ def mostrar_alunos_turma():
         menu_turmas()
 
 def mostrar_turmas():
-    #[BUG] Apenas o primeiro item do dicionário está sendo exibido
     lista_turmas = []
 
     for turma in turmas:
@@ -157,55 +156,55 @@ def menu_principal():
     print("[1] - Cadastrar Aluno \n[2] - Cadastrar Novo Professor \n[3] - Cadastrar Nova Matéria \n[4] - Mostrar Todos os Alunos")
     print("[5] - Mostrar Todos os Professores \n[6] - Mostrar Todas as Matérias \n[7] - Ir Para o Menu de Turmas \n[8] - Sair do Programa ")
     opcao = input("Digite o número correspondente a opção desejada: ")
-    try:
-        opcao = int(opcao)
-        if opcao == 1:
+    # try:
+    opcao = int(opcao)
+    if opcao == 1:
             cadastrar_aluno()
-        elif opcao == 2:
+    elif opcao == 2:
             cadastrar_professor()
-        elif opcao == 3:
+    elif opcao == 3:
             cadastrar_materia()
-        elif opcao == 4:
+    elif opcao == 4:
             mostrar_todos_alunos()
-        elif opcao == 5:
+    elif opcao == 5:
             mostrar_todos_professores()
-        elif opcao == 6:
+    elif opcao == 6:
             mostrar_todas_materias()
-        elif opcao == 7:
+    elif opcao == 7:
             menu_turmas()
-        elif opcao == 8:
+    elif opcao == 8:
             print("Sessão encerrada com sucesso")
-        else:
+    else:
             print("Opção não encontrada")
-    except:
-        print("Digite apenas o número da opção selecionada")
+    # except:
+    #     print("Digite apenas o número da opção selecionada")
 
 def menu_turmas():
     print("[1] - Cadastrar Nova Turma \n[2] - Designar Professor Para Turma \n[3] - Atribuir Alunos a Turma \n[4] - Remover Aluno da Turma")
     print("[5] - Adicionar Nota a Aluno \n[6] - Mostrar Alunos da Turma \n[7] - Mostrar Todas as Turmas\n[8] - Voltar ao Menu Principal")
     opcao = input("Digite o número correspondente a opção desejada: ")
-    try:
-        opcao = int(opcao)
-        if opcao == 1:
-            cadastrar_turma()
-        elif opcao == 2:
-            designar_professor()
-        elif opcao == 3:
-            designar_aluno()
-        elif opcao == 4:
-            remover_aluno()
-        elif opcao == 5:
-            atribuir_nota_aluno()
-        elif opcao == 6:
-            mostrar_alunos_turma()
-        elif opcao == 7:
-            mostrar_turmas()
-        elif opcao == 8:
-            menu_principal()
-        else:
-            print("Opção não encontrada")
-    except:
-        print("Digite apenas o número da opção selecionada")
+    # try:
+    opcao = int(opcao)
+    if opcao == 1:
+        cadastrar_turma()
+    elif opcao == 2:
+        designar_professor()
+    elif opcao == 3:
+        designar_aluno()
+    elif opcao == 4:
+        remover_aluno()
+    elif opcao == 5:
+        atribuir_nota_aluno()
+    elif opcao == 6:
+        mostrar_alunos_turma()
+    elif opcao == 7:
+        mostrar_turmas()
+    elif opcao == 8:
+        menu_principal()
+    else:
+        print("Opção não encontrada")     
+    # except:
+    #     print("Digite apenas o número da opção selecionada")
 
 #Executando o código
 menu_principal()

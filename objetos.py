@@ -23,4 +23,5 @@ class Turma:
         self._alunos = _alunos
         self._notas_alunos = _notas_alunos
 
-        _tamanho_da_turma = len(_alunos)
+    def designar_aluno_method(self,aluno):
+        self._alunos.append(aluno)
