@@ -1,3 +1,8 @@
+#Importando os objetos e bibliotecas
+from objetos import *
+from operator import itemgetter
+import random
+
 #Definindo as listas e listas de objetos
 materias = []
 professores = []
@@ -7,11 +12,6 @@ turmas = []
 #Definindo variaveis auxiliares
 lista_vazia = []
 dicionario_vazio = {}
-
-#Importando os objetos e bibliotecas
-from objetos import *
-from operator import itemgetter
-import random
 
 #Criando as funcionalidades do menu principal
 def cadastrar_aluno():
@@ -196,7 +196,6 @@ def menu_principal():
     except:
         print("Digite apenas o número da opção selecionada")
 
-
 def menu_turmas():
     print("[1] - Cadastrar Nova Turma \n[2] - Designar Professor Para Turma \n[3] - Atribuir Alunos a Turma \n[4] - Remover Aluno da Turma")
     print("[5] - Adicionar Nota a Aluno \n[6] - Mostrar Alunos da Turma \n[7] - Mostrar Todas as Turmas\n[8] - Voltar ao Menu Principal")
@@ -223,8 +222,6 @@ def menu_turmas():
             print("Opção não encontrada")
     except:
         print("Digite apenas o número da opção selecionada")
-
-
 
 #Executando o código
 menu_principal()
