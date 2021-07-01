@@ -101,9 +101,13 @@ def designar_aluno():
         for turma in turmas:
             if turma_selecionada == turma._nome_turma:
                 aluno = input("Digite o nome do aluno: ")
-                turma._alunos.append(aluno)
+                x = turma._alunos.copy()
+                x.append(aluno)
+                turma._alunos = x.copy()
                 print(f"O aluno {aluno} foi adicionado a turma {turma._nome_turma}")
-                menu_turmas()
+        for turma in turmas:
+            print(turma._nome_turma, turma._alunos)
+        menu_turmas()
 
 def remover_aluno():
     turma_selecionada = input("Digite o nome da turma: ")
@@ -153,8 +157,19 @@ def mostrar_alunos_turma():
         menu_turmas()
 
 def mostrar_turmas():
+    quantidades = []
+    nomes = []
+    tuplas = []
     for turma in turmas:
-        print(turma._nome_turma)
+        turma.tamanho_turma = len(turma._alunos)
+        quantidades.append(turma.tamanho_turma)
+        nomes.append(turma._nome_turma)
+    for i in range(0, len(quantidades)):
+        tuplas.append((quantidades[i],nomes[i]))
+    x = sorted(tuplas, key=lambda tuplas: tuplas[0], reverse=True)
+    for i in range(0, len(tuplas)): 
+        print(x[i][1])
+    menu_turmas()
 
 #Criando os menus
 def menu_principal():
@@ -214,6 +229,6 @@ def menu_turmas():
 #Executando o código
 clear()
 menu_principal()
-clear()
+
 
 
