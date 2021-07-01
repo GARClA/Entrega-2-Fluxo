@@ -145,26 +145,10 @@ def mostrar_alunos_turma():
 def mostrar_turmas():
     #[BUG] Apenas o primeiro item do dicionário está sendo exibido
     lista_turmas = []
-    lista_tamanho = []
-    tamanho_turmas = {}
 
     for turma in turmas:
         lista_turmas.append(turma._nome_turma)
-        lista_tamanho.append(f"len(turma._alunos")
-    for nome in lista_turmas:
-        i=0
-        tamanho_turmas[lista_tamanho[i]] = lista_turmas[i]
-        i += 1
-    print(tamanho_turmas)
-    
-    # tamanhos_ordenados = sorted(tamanho_turmas.keys(), reverse= True)
-    # turmas_ordenadas = []
-    # for tamanho in tamanhos_ordenados:
-    #     turmas_ordenadas.append(tamanho_turmas[tamanho])
-    # for turma_ in turmas_ordenadas:
-    #     i = 0
-    #     print(turmas_ordenadas[i])
-    #     i += 1
+    print(lista_turmas)
 
     menu_turmas()
 
