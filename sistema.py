@@ -226,9 +226,7 @@ def mostrar_alunos_turma():
     if turma_selecionada in turmas_atuais:
         lista = sorted(turma._alunos)
         for nome in lista:
-            i = 0
-            print(nome)
-            i += 1
+            print(nome)            
         menu_turmas()
     else:
         print("Turma não cadastrada")
