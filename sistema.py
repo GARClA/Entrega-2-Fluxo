@@ -21,10 +21,28 @@ def clear():
 #Criando as funcionalidades do menu principal
 def cadastrar_aluno():
     primeiro_nome = input("Digite o primeiro nome do aluno: ")
+    primeiro_nome = primeiro_nome.strip().capitalize()
+    while primeiro_nome.isalpha() == False:
+        print("O nome deve conter apenas letras.")
+        primeiro_nome = input("Digite o primeiro nome do aluno: ")
+
     sobrenome = input("Digite o sobrenome do aluno: ")
+    sobrenome = sobrenome.strip().capitalize()
+    while sobrenome.isalpha() == False:
+        print("O sobrenome deve conter apenas letras.")
+        sobrenome = input("Digite o sobrenome do aluno: ")
+    
     cpf = input("Digite o CPF do aluno: ")
+    cpf = cpf.strip()
+    while len(cpf) != 11:
+        print("O CPF deve conter os 11 dígitos numéricos")
+        cpf = input("Digite o CPF do aluno: ")
+        if cpf.isnumeric() == False:
+            print("O CPF deve conter apenas números")
+            cpf = input("Digite o CPF do aluno: ")
+
     alunos.append(Aluno(primeiro_nome, sobrenome, cpf))
-    print(f"Aluno {primeiro_nome} {sobrenome} cadastrado com sucesso.")
+    print(f"Aluno {primeiro_nome} {sobrenome} foi cadastrado com sucesso no CPF {cpf}.")
     menu_principal()
 
 def cadastrar_professor():
