@@ -47,14 +47,35 @@ def cadastrar_aluno():
 
 def cadastrar_professor():
     primeiro_nome = input("Digite o primeiro nome do professor: ")
+    primeiro_nome = primeiro_nome.strip().capitalize()
+    while primeiro_nome.isalpha() == False:
+        print("O nome deve conter apenas letras.")
+        primeiro_nome = input("Digite o primeiro nome do professor: ")
+
     sobrenome = input("Digite o sobrenome do professor: ")
+    sobrenome = sobrenome.strip().capitalize()
+    while sobrenome.isalpha() == False:
+        print("O sobrenome deve conter apenas letras.")
+        sobrenome = input("Digite o sobrenome do professor: ")
+    
     cpf = input("Digite o CPF do professor: ")
+    cpf = cpf.strip()
+    while len(cpf) != 11:
+        print("O CPF deve conter os 11 dígitos numéricos")
+        cpf = input("Digite o CPF do professor: ")
+        if cpf.isnumeric() == False:
+            print("O CPF deve conter apenas números")
+            cpf = input("Digite o CPF do professor: ")
     professores.append(Professor(primeiro_nome, sobrenome, cpf))
-    print(f"Professor {primeiro_nome} {sobrenome} cadastrado com sucesso.")
+    print(f"Professor {primeiro_nome} {sobrenome} cadastrado com sucesso no CPF .")
     menu_principal()
 
 def cadastrar_materia():
     nome_da_materia = input("Digite o nome da matéria: ")
+    nome_da_materia = nome_da_materia.strip().capitalize()
+    while nome_da_materia.isalpha() == False:
+        print("O nome da matéria deve conter apenas letras.")
+        nome_da_materia = input("Digite o nome da matéria: ")
     materias.append(Materia(nome_da_materia))
     print(f"Matéria '{nome_da_materia}' cadastrada com sucesso.")
     menu_principal()
@@ -85,6 +106,16 @@ def mostrar_todas_materias():
 #Criando as funcionalidades do menu de turmas
 def cadastrar_turma():
     materia = input("Insira o nome da matéria da turma: ")
+    materia = materia.strip().capitalize()
+
+    lista_materias = []
+    for item in materias:
+        lista_materias.append(item._nome_materia)
+    if materia not in lista_materias:
+        print("Matéria não cadastrada: ")
+        print("Cadastre a matéria: ")
+        cadastrar_materia()
+        
     nome_da_turma = f"{materia}{random.randint(1000,9999)}"
     turmas.append(Turma(nome_da_turma,materia,None,lista_vazia,dicionario_vazio))
     clear()
@@ -93,55 +124,79 @@ def cadastrar_turma():
 
 def designar_professor():
     turma_selecionada = input("Digite o nome da turma: ")
+    turma_selecionada = turma_selecionada.strip().capitalize()
     todos_os_nomes = []
     for turma in turmas:
         todos_os_nomes.append(turma._nome_turma)
     if turma_selecionada not in todos_os_nomes:
-        print("Turma não encontrada")
-        menu_turmas()
+        print("Turma não cadastrada")
+        cadastrar_turma()
     else:
         for turma in turmas:
             if turma_selecionada == turma._nome_turma:
-                professor = input("Digite o nome do professor: ")
-                turma._professor.append(professor)
-                print(f"O professor {professor} foi adicionado a turma {turma._nome_turma}")
-                menu_turmas()
+                professor = input("Digite o cpf do professor : ")
+                todos_professores = []
+                for item in professores:
+                    todos_professores.append(item._cpf)
+                if professor not in todos_professores:
+                    print("Professor não cadastrado: ")
+                    cadastrar_professor()
+
+                turma._professor = professor
+                print(f"O professor de CPF {professor} foi adicionado a turma {turma._nome_turma}")
+
+    menu_turmas()
 
 def designar_aluno():
     turma_selecionada = input("Digite o nome da turma: ")
+    turma_selecionada = turma_selecionada.strip().capitalize()
     todos_os_nomes = []
+    aluno = ''
     for turma in turmas:
         todos_os_nomes.append(turma._nome_turma)
     if turma_selecionada not in todos_os_nomes:
-        print("Turma não encontrada")
-        menu_turmas()
+        print("Turma não cadastrada")
+        cadastrar_turma()
     else:
         for turma in turmas:
             if turma_selecionada == turma._nome_turma:
-                aluno = input("Digite o nome do aluno: ")
-                x = turma._alunos.copy()
-                x.append(aluno)
-                turma._alunos = x.copy()
-                print(f"O aluno {aluno} foi adicionado a turma {turma._nome_turma}")
-        for turma in turmas:
-            print(turma._nome_turma, turma._alunos)
+                aluno = input("Digite o CPF do aluno: ")
+                todos_alunos = []
+            for item in alunos:
+                todos_alunos.append(item._cpf)
+            if aluno not in todos_alunos:
+                print("Aluno não cadastrado: ")
+                cadastrar_aluno()
+
+            x = turma._alunos.copy()
+            x.append(aluno)
+            turma._alunos = x.copy()
+            print(f"O aluno {aluno} foi adicionado a turma {turma._nome_turma}")
         menu_turmas()
 
 def remover_aluno():
     turma_selecionada = input("Digite o nome da turma: ")
+    turma_selecionada = turma_selecionada.strip().capitalize()
     todos_os_nomes = []
+    aluno = ''
     for turma in turmas:
         todos_os_nomes.append(turma._nome_turma)
     if turma_selecionada not in todos_os_nomes:
-        print("Turma não encontrada")
-        menu_turmas()
+        print("Turma não cadastrada")
+        cadastrar_turma()
     else:
         for turma in turmas:
             if turma_selecionada == turma._nome_turma:
-                aluno = input("Digite o nome do aluno: ")
-                turma._alunos.pop(turma._alunos.index(aluno))
-                print(f"O aluno {aluno} foi removido da {turma._nome_turma}")
-                menu_turmas()
+                aluno = input("Digite o CPF do aluno: ")
+                todos_alunos = []
+            for item in alunos:
+                todos_alunos.append(item._cpf)
+            if aluno not in todos_alunos:
+                print("Aluno não cadastrado: ")
+                cadastrar_aluno()
+            turma._alunos.pop(turma._alunos.index(aluno))
+            print(f"O aluno de CPF {aluno} foi removido da {turma._nome_turma}")
+            menu_turmas()
 
 def atribuir_nota_aluno():
     aluno = input("Digite o CPF do aluno: ")
