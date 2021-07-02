@@ -194,7 +194,11 @@ def remover_aluno():
             if aluno not in todos_alunos:
                 print("Aluno não cadastrado: ")
                 cadastrar_aluno()
-            turma._alunos.pop(turma._alunos.index(aluno))
+            try:
+                turma._alunos.pop(turma._alunos.index(aluno))
+            except:
+                print("O aluno não está na turma. ")
+                menu_turmas()
             print(f"O aluno de CPF {aluno} foi removido da {turma._nome_turma}")
             menu_turmas()
 
@@ -205,7 +209,7 @@ def atribuir_nota_aluno():
         todos_alunos.append(individuo._cpf)
     if aluno not in todos_alunos:
         print("Aluno não encontrado")
-        menu_turmas()
+        cadastrar_aluno()
     else:
         for individuo in alunos:
             if aluno == individuo._cpf:
@@ -215,6 +219,7 @@ def atribuir_nota_aluno():
 
 def mostrar_alunos_turma():
     turma_selecionada = input("Insira o nome da turma: ")
+    turma_selecionada = turma_selecionada.strip().capitalize()
     turmas_atuais = []
     for turma in turmas:
         turmas_atuais.append(turma._nome_turma)
@@ -226,8 +231,8 @@ def mostrar_alunos_turma():
             i += 1
         menu_turmas()
     else:
-        print("Turma não encontrada")
-        menu_turmas()
+        print("Turma não cadastrada")
+        cadastrar_turma()
 
 def mostrar_turmas():
     quantidades = []
@@ -249,8 +254,10 @@ def menu_principal():
     print("[1] - Cadastrar Aluno \n[2] - Cadastrar Novo Professor \n[3] - Cadastrar Nova Matéria \n[4] - Mostrar Todos os Alunos")
     print("[5] - Mostrar Todos os Professores \n[6] - Mostrar Todas as Matérias \n[7] - Ir Para o Menu de Turmas \n[8] - Sair do Programa ")
     opcao = input("Digite o número correspondente a opção desejada: ")
-    # try:
-    opcao = int(opcao)
+    try:
+        opcao = int(opcao)
+    except:
+        print("Digite apenas o número da opção selecionada")
     if opcao == 1:
             cadastrar_aluno()
     elif opcao == 2:
@@ -269,15 +276,16 @@ def menu_principal():
             print("Sessão encerrada com sucesso")
     else:
             print("Opção não encontrada")
-    # except:
-    #     print("Digite apenas o número da opção selecionada")
+
 
 def menu_turmas():
     print("[1] - Cadastrar Nova Turma \n[2] - Designar Professor Para Turma \n[3] - Atribuir Alunos a Turma \n[4] - Remover Aluno da Turma")
     print("[5] - Adicionar Nota a Aluno \n[6] - Mostrar Alunos da Turma \n[7] - Mostrar Todas as Turmas\n[8] - Voltar ao Menu Principal")
     opcao = input("Digite o número correspondente a opção desejada: ")
-    # try:
-    opcao = int(opcao)
+    try:
+        opcao = int(opcao)
+    except:
+        print("Digite apenas o número da opção selecionada")
     if opcao == 1:
         cadastrar_turma()
     elif opcao == 2:
@@ -296,8 +304,6 @@ def menu_turmas():
         menu_principal()
     else:
         print("Opção não encontrada")     
-    # except:
-    #     print("Digite apenas o número da opção selecionada")
 
 #Executando o código
 clear()
